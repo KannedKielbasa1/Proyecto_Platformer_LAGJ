@@ -41,3 +41,18 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: VOID
+    uniqueID: 95583233
+    locked: 0
+  - name: PIPES
+    uniqueID: 2669336259
+    locked: 0
+  - name: WALL
+    uniqueID: 3106593473
+    locked: 0
+  - name: PROPS
+    uniqueID: 1394395269
+    locked: 0
+  - name: SURFACE
+    uniqueID: 1427587785
+    locked: 0
