@@ -13870,6 +13870,9 @@ GameObject:
   - component: {fileID: 1542480152}
   - component: {fileID: 1542480154}
   - component: {fileID: 1542480153}
+  - component: {fileID: 1542480157}
+  - component: {fileID: 1542480156}
+  - component: {fileID: 1542480155}
   m_Layer: 0
   m_Name: SURFACE2
   m_TagString: Untagged
@@ -14229,6 +14232,150 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!66 &1542480155
+CompositeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1542480151}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_GeometryType: 0
+  m_GenerationType: 0
+  m_EdgeRadius: 0
+  m_ColliderPaths:
+  - m_Collider: {fileID: 1542480156}
+    m_ColliderPaths:
+    - - X: 180000000
+        Y: 60000000
+      - X: 80000000
+        Y: 60000000
+      - X: 80000000
+        Y: 54375000
+      - X: 180000000
+        Y: 54375000
+    - - X: 30000000
+        Y: 50000000
+      - X: 10000000
+        Y: 50000000
+      - X: 10000000
+        Y: 30000000
+      - X: 30000000
+        Y: 30000000
+    - - X: -110000000
+        Y: 40000000
+      - X: -180000000
+        Y: 40000000
+      - X: -180000000
+        Y: 34375000
+      - X: -110000000
+        Y: 34375000
+  m_CompositePaths:
+    m_Paths:
+    - - {x: 17.999971, y: 5.4375}
+      - {x: 17.999971, y: 6}
+      - {x: 8, y: 5.999971}
+      - {x: 8.00003, y: 5.4375}
+    - - {x: 2.999971, y: 3}
+      - {x: 2.999971, y: 5}
+      - {x: 1, y: 4.999971}
+      - {x: 1.0000293, y: 3}
+    - - {x: -11.00003, y: 3.4375}
+      - {x: -11.00003, y: 4}
+      - {x: -18, y: 3.999971}
+      - {x: -17.999971, y: 3.4375}
+  m_VertexDistance: 0.0005
+  m_OffsetDistance: 0.00005
+  m_UseDelaunayMesh: 0
+  m_CompositeGameObject: {fileID: 1542480151}
+--- !u!19719996 &1542480156
+TilemapCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1542480151}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 1
+  m_Offset: {x: 0, y: 0}
+  m_MaximumTileChangeCount: 1000
+  m_ExtrusionFactor: 0
+  m_UseDelaunayMesh: 0
+--- !u!50 &1542480157
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1542480151}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1564370123
 GameObject:
   m_ObjectHideFlags: 0
@@ -29975,7 +30122,7 @@ GameObject:
   - component: {fileID: 1835696010}
   - component: {fileID: 1835696009}
   m_Layer: 0
-  m_Name: PROPS
+  m_Name: PROPS (Ignore)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32511,7 +32658,7 @@ GameObject:
   - component: {fileID: 2056992497}
   - component: {fileID: 2056992499}
   m_Layer: 0
-  m_Name: MovingPlatform4
+  m_Name: MPlatform4 (Ignore)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
