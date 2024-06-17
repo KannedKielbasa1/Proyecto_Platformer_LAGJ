@@ -3,18 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class BasicMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     public Animator animator;
     public float speed = 5.0f;
-    public float jumpForce = 5.0f;
 
     private float screenHalfWidthInWorldUnits;
     private float screenHalfHeightInWorldUnits;
 
     private PlayerControls controls;
     private Vector2 moveInput;
-    private bool jumpInput;
 
     void Awake()
     {
@@ -22,9 +20,6 @@ public class BasicMovement : MonoBehaviour
 
         controls.Player.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
         controls.Player.Move.canceled += ctx => moveInput = Vector2.zero;
-
-        controls.Player.Jump.performed += ctx => jumpInput = true;
-        controls.Player.Jump.canceled += ctx => jumpInput = false;
     }
 
     void OnEnable()
@@ -39,7 +34,7 @@ public class BasicMovement : MonoBehaviour
 
     void Start()
     {
-        // CALCULAR MITAD DE LA PANTALLA EN UNIDADES DEL MUNDO
+        // Calcular la mitad de la pantalla en unidades del mundo
         Camera cam = Camera.main;
         Vector3 screenBounds = cam.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, cam.nearClipPlane));
         screenHalfWidthInWorldUnits = screenBounds.x;
@@ -48,18 +43,11 @@ public class BasicMovement : MonoBehaviour
 
     void Update()
     {
-        // MOVIMIENTO HORIZONTAL
+        // Movimiento horizontal
         Vector3 horizontal = new Vector3(moveInput.x * speed * Time.deltaTime, 0.0f, 0.0f);
         transform.position += horizontal;
 
-        // MOVIMIENTO VERTICAL (SALTO)
-        if (jumpInput)
-        {
-            transform.position += new Vector3(0.0f, jumpForce * Time.deltaTime, 0.0f);
-            jumpInput = false; // SALTA UNA VEZ POR APACHURRAR
-        }
-
-        // LOOP PARA PASAR AL PERSONAJE AL OTRO LADO DE LA PANTALLA
+        // Loop para pasar al personaje al otro lado de la pantalla
         Vector3 newPosition = transform.position;
 
         if (newPosition.x < -screenHalfWidthInWorldUnits)
@@ -81,5 +69,8 @@ public class BasicMovement : MonoBehaviour
         }
 
         transform.position = newPosition;
+
+        // Actualizar la animación
+        animator.SetFloat("Horizontal", moveInput.x);
     }
 }
