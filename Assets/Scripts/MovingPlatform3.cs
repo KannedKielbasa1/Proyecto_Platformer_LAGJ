@@ -3,13 +3,15 @@ using System.Collections;
 
 public class MovingPlatform3 : MonoBehaviour
 {
-    public float fadeDuration = 2f; // DURACION DEL FADE
+    public float fadeDuration = 2f; // Duración del fade
     private SpriteRenderer spriteRenderer;
+    private EdgeCollider2D edgeCollider;
     private bool isFadingIn;
 
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        edgeCollider = GetComponent<EdgeCollider2D>();
         StartCoroutine(FadeInAndOut());
     }
 
@@ -17,16 +19,19 @@ public class MovingPlatform3 : MonoBehaviour
     {
         while (true)
         {
-            yield return Fade(0f, 1f); // FADEIN
-            yield return new WaitForSeconds(1f); // ESPERAR POR UN SEGUNDO PARA QUE SEA VISIBLE
-            yield return Fade(1f, 0f); // FADEOUT
-            yield return new WaitForSeconds(1f); // LO MISMO DE ARRIBA
+            yield return Fade(0f, 1f); // Fade in
+            yield return new WaitForSeconds(1f); // Esperar por un segundo para que sea visible
+            yield return Fade(1f, 0f); // Fade out
+            yield return new WaitForSeconds(1f); // Lo mismo de arriba
         }
     }
 
     IEnumerator Fade(float startAlpha, float endAlpha)
     {
         float elapsedTime = 0f;
+
+        // Activar/desactivar colisión al inicio del fade
+        edgeCollider.enabled = endAlpha > 0f;
 
         while (elapsedTime < fadeDuration)
         {
@@ -38,9 +43,12 @@ public class MovingPlatform3 : MonoBehaviour
             yield return null;
         }
 
-        // ACUERDATE QUE EL ALPHA ESTE BIEN PUESTO AHHHHHHHHHHHHHHHHH
+        // Asegurarse de que el alpha esté bien puesto
         Color finalColor = spriteRenderer.color;
         finalColor.a = endAlpha;
         spriteRenderer.color = finalColor;
+
+        // Activar/desactivar colisión al final del fade
+        edgeCollider.enabled = endAlpha > 0f;
     }
 }

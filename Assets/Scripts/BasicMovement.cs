@@ -7,12 +7,13 @@ public class PlayerMovement : MonoBehaviour
 {
     public Animator animator;
     public float speed = 5.0f;
+    public float jumpForce = 10.0f;
 
-    private float screenHalfWidthInWorldUnits;
-    private float screenHalfHeightInWorldUnits;
-
+    private Rigidbody2D rb;
+    private CapsuleCollider2D capsuleCollider;
     private PlayerControls controls;
     private Vector2 moveInput;
+    private bool isGrounded;
 
     void Awake()
     {
@@ -20,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
 
         controls.Player.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
         controls.Player.Move.canceled += ctx => moveInput = Vector2.zero;
+        controls.Player.Jump.performed += ctx => Jump();
     }
 
     void OnEnable()
@@ -34,43 +36,51 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-        // Calcular la mitad de la pantalla en unidades del mundo
-        Camera cam = Camera.main;
-        Vector3 screenBounds = cam.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, cam.nearClipPlane));
-        screenHalfWidthInWorldUnits = screenBounds.x;
-        screenHalfHeightInWorldUnits = screenBounds.y;
+        rb = GetComponent<Rigidbody2D>();
+        capsuleCollider = GetComponent<CapsuleCollider2D>();
     }
 
     void Update()
     {
         // Movimiento horizontal
-        Vector3 horizontal = new Vector3(moveInput.x * speed * Time.deltaTime, 0.0f, 0.0f);
-        transform.position += horizontal;
-
-        // Loop para pasar al personaje al otro lado de la pantalla
-        Vector3 newPosition = transform.position;
-
-        if (newPosition.x < -screenHalfWidthInWorldUnits)
-        {
-            newPosition.x = screenHalfWidthInWorldUnits;
-        }
-        else if (newPosition.x > screenHalfWidthInWorldUnits)
-        {
-            newPosition.x = -screenHalfWidthInWorldUnits;
-        }
-
-        if (newPosition.y < -screenHalfHeightInWorldUnits)
-        {
-            newPosition.y = screenHalfHeightInWorldUnits;
-        }
-        else if (newPosition.y > screenHalfHeightInWorldUnits)
-        {
-            newPosition.y = -screenHalfHeightInWorldUnits;
-        }
-
-        transform.position = newPosition;
+        Vector2 horizontalMove = new Vector2(moveInput.x * speed, rb.velocity.y);
+        rb.velocity = new Vector2(horizontalMove.x, rb.velocity.y);
 
         // Actualizar la animación
         animator.SetFloat("Horizontal", moveInput.x);
+
+        // Verificar si está en el suelo
+        isGrounded = CheckGrounded();
+    }
+
+    private void Jump()
+    {
+        if (isGrounded)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        }
+    }
+
+    private bool CheckGrounded()
+    {
+        // Usar el colisionador para detectar si está en el suelo
+        RaycastHit2D hit = Physics2D.Raycast(capsuleCollider.bounds.center, Vector2.down, capsuleCollider.bounds.extents.y + 0.1f);
+        return hit.collider != null;
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
+        }
+    }
+
+    void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = false;
+        }
     }
 }
