@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     private PlayerControls controls;
     private Vector2 moveInput;
     private bool isGrounded;
+    private bool hasJumped;
 
     void Awake()
     {
@@ -21,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
 
         controls.Player.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
         controls.Player.Move.canceled += ctx => moveInput = Vector2.zero;
-        controls.Player.Jump.performed += ctx => Jump();
+        controls.Player.Jump.performed += ctx => TryJump();
     }
 
     void OnEnable()
@@ -51,13 +52,20 @@ public class PlayerMovement : MonoBehaviour
 
         // Verificar si está en el suelo
         isGrounded = CheckGrounded();
-    }
 
-    private void Jump()
-    {
+        // Resetear la variable de salto si está en el suelo
         if (isGrounded)
         {
+            hasJumped = false;
+        }
+    }
+
+    private void TryJump()
+    {
+        if (isGrounded && !hasJumped)
+        {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            hasJumped = true; // Marcar que ya se ha realizado un salto
         }
     }
 
