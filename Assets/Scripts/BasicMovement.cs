@@ -8,13 +8,16 @@ public class PlayerMovement : MonoBehaviour
     public Animator animator;
     public float speed = 5.0f;
     public float jumpForce = 10.0f;
+    public Rigidbody2D rb;
+    public Transform groundCheck;
+    public LayerMask groundLayer;
 
-    private Rigidbody2D rb;
     private CapsuleCollider2D capsuleCollider;
     private PlayerControls controls;
     private Vector2 moveInput;
     private bool isGrounded;
-    private bool hasJumped;
+    private int maxJumps = 1;
+    private int jumpsMade = 0;
 
     void Awake()
     {
@@ -23,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
         controls.Player.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
         controls.Player.Move.canceled += ctx => moveInput = Vector2.zero;
         controls.Player.Jump.performed += ctx => TryJump();
+        controls.Player.Jump.canceled += ctx => EndJump();
     }
 
     void OnEnable()
@@ -53,27 +57,31 @@ public class PlayerMovement : MonoBehaviour
         // Verificar si está en el suelo
         isGrounded = CheckGrounded();
 
-        // Resetear la variable de salto si está en el suelo
+        // Resetear el contador de saltos si está en el suelo
         if (isGrounded)
         {
-            hasJumped = false;
+            jumpsMade = 0;
         }
     }
 
     private void TryJump()
     {
-        if (isGrounded && !hasJumped)
+        if (isGrounded && jumpsMade < maxJumps)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-            hasJumped = true; // Marcar que ya se ha realizado un salto
+            jumpsMade++; // Incrementar el contador de saltos
+            isGrounded = false; // Marcar que ya no está en el suelo
         }
+    }
+
+    private void EndJump()
+    {
+        // Este método se puede utilizar para manejar la liberación del botón de salto si es necesario
     }
 
     private bool CheckGrounded()
     {
-        // Usar el colisionador para detectar si está en el suelo
-        RaycastHit2D hit = Physics2D.Raycast(capsuleCollider.bounds.center, Vector2.down, capsuleCollider.bounds.extents.y + 0.1f);
-        return hit.collider != null;
+        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
     }
 
     void OnCollisionEnter2D(Collision2D collision)
