@@ -20,7 +20,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 5c4af1394f82a8e41b430288302ca3de, type: 2}
+  m_Motion: {fileID: 7400000, guid: 4430279330ce813409ce00aeaba275e2, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -47,7 +47,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 8ecb917b93f82ce4c93f91f40641beaf, type: 2}
+  m_Motion: {fileID: 7400000, guid: 8ba9e39965ef122469e5663acff27fc3, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -84,7 +84,7 @@ AnimatorStateMachine:
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
-  m_AnyStatePosition: {x: 240, y: -440, z: 0}
+  m_AnyStatePosition: {x: 200, y: -490, z: 0}
   m_EntryPosition: {x: 30, y: -40, z: 0}
   m_ExitPosition: {x: 220, y: 260, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
@@ -171,7 +171,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Leona 1
+  m_Name: Mono 1
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: Horizontal
@@ -264,7 +264,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 07326a766bbe2324a8a528751090052c, type: 2}
+  m_Motion: {fileID: 7400000, guid: b1f5c19bb1113d7428caec4b5b162905, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
