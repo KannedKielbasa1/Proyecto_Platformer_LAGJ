@@ -83,7 +83,7 @@ public class CameraFollow : MonoBehaviour
         if (player != null)
         {
             Gizmos.color = Color.blue;
-            Vector3 offsetPosition = new Vector3(player.position.x + offset.x, player.position.y + offset.y, transform.position.z);
+            Vector3 offsetPosition = new Vector3(player.position.x + offset.x, player.position.y + offset.y, player.position.z);
             Gizmos.DrawWireSphere(offsetPosition, 0.1f);
         }
     }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerMovement : MonoBehaviour
+public class BasicMovement : MonoBehaviour
 {
     public Animator animator;
     public float speed = 5.0f;
@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     public Rigidbody2D rb;
     public Transform groundCheck;
     public LayerMask groundLayer;
+    public SpriteRenderer _sprite;
 
     private CapsuleCollider2D capsuleCollider;
     private PlayerControls controls;
@@ -43,6 +44,10 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         capsuleCollider = GetComponent<CapsuleCollider2D>();
+        if (_sprite == null)
+        {
+            _sprite = GetComponent<SpriteRenderer>();
+        }
     }
 
     void Update()
@@ -52,7 +57,21 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = new Vector2(horizontalMove.x, rb.velocity.y);
 
         // Actualizar la animación
-        animator.SetFloat("Horizontal", moveInput.x);
+        animator.SetBool("IsMoving", moveInput.x != 0);
+        if (moveInput.x > 0)
+        {
+            if (_sprite != null)
+            {
+                _sprite.flipX =true;
+            }
+        }
+        else if (moveInput.x < 0)
+        {
+            if (_sprite != null)
+            {
+                _sprite.flipX = false;
+            }
+        }
 
         // Verificar si está en el suelo
         isGrounded = CheckGrounded();
