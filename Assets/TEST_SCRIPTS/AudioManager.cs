@@ -1,68 +1,43 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    // PROPIEDADES
-    public float volume { get; private set; }
-    public bool isMuted { get; private set; }
-    public string currentTrack { get; private set; }
-    public float soundEffectsVolume { get; private set; }
-    public float musicVolume { get; private set; }
+    // Propiedades
+    private float volume;
+    private bool isMuted;
+    private string currentTrack;
+    private float soundEffectsVolume;
+    private float musicVolume;
 
-    // REFERENCIAS A LOS AUDIOS
-    private AudioSource musicSource;
-    private AudioSource soundEffectsSource;
+    // Referencias a componentes de audio
+    public AudioSource audioSource;
+    public AudioClip[] audioClips;
 
-    void Awake()
-    {
-        // CONFIGURA AUDIOMANAGER COMO SINGLETON
-        if (FindObjectsOfType<AudioManager>().Length > 1)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            DontDestroyOnLoad(gameObject);
-        }
-
-        // INICIA LOS AUDIOSOURCES
-        musicSource = gameObject.AddComponent<AudioSource>();
-        soundEffectsSource = gameObject.AddComponent<AudioSource>();
-
-        // VALORES INICIALES
-        volume = 1.0f;
-        soundEffectsVolume = 1.0f;
-        musicVolume = 1.0f;
-        isMuted = false;
-    }
-
-    // METODOS
+    // Métodos
     public void PlaySound(string name)
     {
-        // CARGAR Y REPRODUCIR SONIDO
-        AudioClip clip = Resources.Load<AudioClip>(name);
+        AudioClip clip = GetAudioClipByName(name);
         if (clip != null)
         {
-            soundEffectsSource.PlayOneShot(clip, soundEffectsVolume);
+            audioSource.PlayOneShot(clip, soundEffectsVolume);
         }
         else
         {
-            Debug.LogWarning("Sonido no encontrado: " + name);
+            Debug.LogWarning("Clip not found: " + name);
         }
     }
 
     public void StopSound(string name)
     {
-        // 
-        soundEffectsSource.Stop();
+        // Unity no proporciona una manera directa de detener un sonido específico, 
+        // pero podemos detener todos los sonidos.
+        audioSource.Stop();
     }
 
     public void SetVolume(float volume)
     {
-        this.volume = Mathf.Clamp(volume, 0f, 1f);
-        AudioListener.volume = this.volume;
+        this.volume = volume;
+        AudioListener.volume = volume;
     }
 
     public void Mute()
@@ -79,39 +54,46 @@ public class AudioManager : MonoBehaviour
 
     public void PlayMusic(string track)
     {
-        // CARGAR Y REPRODUCIR LA MUSICA
-        AudioClip clip = Resources.Load<AudioClip>(track);
+        AudioClip clip = GetAudioClipByName(track);
         if (clip != null)
         {
-            musicSource.clip = clip;
-            musicSource.volume = musicVolume;
-            musicSource.loop = true;
-            musicSource.Play();
+            audioSource.clip = clip;
+            audioSource.volume = musicVolume;
+            audioSource.loop = true;
+            audioSource.Play();
             currentTrack = track;
         }
         else
         {
-            Debug.LogWarning("Musica no encontrada: " + track);
+            Debug.LogWarning("Track not found: " + track);
         }
     }
 
     public void StopMusic()
     {
-        musicSource.Stop();
+        audioSource.Stop();
         currentTrack = null;
-    }
-
-    public void SetSoundEffectsVolume(float volume)
-    {
-        soundEffectsVolume = Mathf.Clamp(volume, 0f, 1f);
     }
 
     public void SetMusicVolume(float volume)
     {
-        musicVolume = Mathf.Clamp(volume, 0f, 1f);
-        if (musicSource.isPlaying)
+        musicVolume = volume;
+        if (audioSource.isPlaying && audioSource.clip.name == currentTrack)
         {
-            musicSource.volume = musicVolume;
+            audioSource.volume = musicVolume;
         }
+    }
+
+    // Método auxiliar para encontrar un AudioClip por su nombre
+    private AudioClip GetAudioClipByName(string name)
+    {
+        foreach (var clip in audioClips)
+        {
+            if (clip.name == name)
+            {
+                return clip;
+            }
+        }
+        return null;
     }
 }

@@ -704,7 +704,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 197294386}
   speed: 7
+  sprintValue: 8
   jumpForce: 9
+  doubleJumpForce: 6
   rb: {fileID: 197294384}
   groundCheck: {fileID: 1204435844}
   groundLayer:
@@ -30025,8 +30027,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1588716608}
-  speed: 7
-  jumpForce: 9
+  speed: 5
+  sprintValue: 7
+  jumpForce: 8
+  doubleJumpForce: 3
   rb: {fileID: 1588716611}
   groundCheck: {fileID: 1765931081}
   groundLayer:
