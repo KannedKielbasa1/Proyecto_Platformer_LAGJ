@@ -108,6 +108,7 @@ public class BasicMovement : MonoBehaviour
 
         // ACTUALIZAR ESTADO ISGROUNDED EN EL ANIMATOR
         animator.SetBool("IsGrounded", isGrounded);
+        animator.SetBool("Jumping", !isGrounded);
 
         // ACTUALIZAR ESTADO DEL DASH
         if (isDashing)
@@ -126,7 +127,6 @@ public class BasicMovement : MonoBehaviour
             isGrounded = false; // MARCAR QUE YA NO ESTÁ EN EL SUELO
 
             // ACTIVAR ANIMACION DE SALTO
-            animator.SetTrigger("JumpTrigger");
         }
     }
 
