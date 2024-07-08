@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ff0d8001600e6c048b2d3474a93dcedb
+guid: fc5eb1965b206154ba1fed17661d9a0f
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -113,10 +113,10 @@ TextureImporter:
       name: LEONAJUMP_0
       rect:
         serializedVersion: 2
-        x: 32
-        y: 60
-        width: 138
-        height: 182
+        x: 27
+        y: 127
+        width: 96
+        height: 205
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,8 +124,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1a6a43b520ac1fd4285f7708f00c6ab2
-      internalID: -713660958
+      spriteID: 9ff178e03ff0ede41b1e9e423dfb7ab5
+      internalID: -1929787408
       vertices: []
       indices: 
       edges: []
@@ -134,10 +134,10 @@ TextureImporter:
       name: LEONAJUMP_1
       rect:
         serializedVersion: 2
-        x: 230
-        y: 69
-        width: 101
-        height: 116
+        x: 204
+        y: 80
+        width: 96
+        height: 201
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -145,8 +145,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 81b232616345cdd478200fb09af19a91
-      internalID: -485725868
+      spriteID: db33d08c708bfa746b0a320389e3b12a
+      internalID: -239035672
       vertices: []
       indices: 
       edges: []
@@ -155,10 +155,10 @@ TextureImporter:
       name: LEONAJUMP_2
       rect:
         serializedVersion: 2
-        x: 386
-        y: 18
-        width: 138
-        height: 182
+        x: 374
+        y: 28
+        width: 123
+        height: 259
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -166,8 +166,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bd8e12403f521744da7d2cc279bb5f73
-      internalID: -136630902
+      spriteID: b51200739a7940b40aef1c455489014e
+      internalID: -315787709
       vertices: []
       indices: 
       edges: []
@@ -176,10 +176,10 @@ TextureImporter:
       name: LEONAJUMP_3
       rect:
         serializedVersion: 2
-        x: 567
-        y: 52
-        width: 160
-        height: 151
+        x: 575
+        y: 9
+        width: 84
+        height: 275
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -187,8 +187,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3816241aae8553648898fcb9f4e2db1c
-      internalID: -61197278
+      spriteID: 833adfb1e5e7f4b4ebe94f4728f8fb8d
+      internalID: -2066064846
       vertices: []
       indices: 
       edges: []
@@ -197,10 +197,10 @@ TextureImporter:
       name: LEONAJUMP_4
       rect:
         serializedVersion: 2
-        x: 812
-        y: 76
-        width: 101
-        height: 138
+        x: 724
+        y: 31
+        width: 138
+        height: 248
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -208,8 +208,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1144b20db0afd7344a82f2aace02628f
-      internalID: 549351518
+      spriteID: 270bc97e2b0fb43479f447fe2df704c1
+      internalID: -1895472879
       vertices: []
       indices: 
       edges: []
@@ -218,10 +218,10 @@ TextureImporter:
       name: LEONAJUMP_5
       rect:
         serializedVersion: 2
-        x: 961
-        y: 69
-        width: 164
-        height: 177
+        x: 925
+        y: 29
+        width: 168
+        height: 235
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -229,8 +229,176 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6d9dd8d578defd84c8276e5366e1a5c1
-      internalID: -684298477
+      spriteID: 6c91b64e140b3464f8e18eee57e12129
+      internalID: -1101004567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LEONAJUMP_6
+      rect:
+        serializedVersion: 2
+        x: 1194
+        y: 11
+        width: 94
+        height: 254
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1359322d068bdfa419e6a7a559dfd729
+      internalID: -1207156387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LEONAJUMP_7
+      rect:
+        serializedVersion: 2
+        x: 1383
+        y: 23
+        width: 162
+        height: 230
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f422ed99e06aefd489df6f5d95873665
+      internalID: 514476196
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LEONAJUMP_8
+      rect:
+        serializedVersion: 2
+        x: 1640
+        y: 1
+        width: 82
+        height: 275
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f8a18acd2fc88524d97d656054159564
+      internalID: -683719515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LEONAJUMP_9
+      rect:
+        serializedVersion: 2
+        x: 1788
+        y: 27
+        width: 185
+        height: 238
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0c57aeffcc44aa48b6b66fccc3a78d0
+      internalID: 134775704
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LEONAJUMP_10
+      rect:
+        serializedVersion: 2
+        x: 2053
+        y: 7
+        width: 73
+        height: 264
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 609c3ba0c1a30e74db066b776746a603
+      internalID: 1408812381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LEONAJUMP_11
+      rect:
+        serializedVersion: 2
+        x: 2199
+        y: 24
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7241305e0736dd447889cb39bf006b12
+      internalID: 445223443
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LEONAJUMP_12
+      rect:
+        serializedVersion: 2
+        x: 2400
+        y: 28
+        width: 113
+        height: 172
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89dc28d93aa69564a9c403c8d241f7ab
+      internalID: -384989652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LEONAJUMP_13
+      rect:
+        serializedVersion: 2
+        x: 2592
+        y: 19
+        width: 112
+        height: 173
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b086ced79228ac47b483b2787278e12
+      internalID: -1578573699
       vertices: []
       indices: 
       edges: []
@@ -246,12 +414,20 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      LEONAJUMP_0: -713660958
-      LEONAJUMP_1: -485725868
-      LEONAJUMP_2: -136630902
-      LEONAJUMP_3: -61197278
-      LEONAJUMP_4: 549351518
-      LEONAJUMP_5: -684298477
+      LEONAJUMP_0: -1929787408
+      LEONAJUMP_1: -239035672
+      LEONAJUMP_10: 1408812381
+      LEONAJUMP_11: 445223443
+      LEONAJUMP_12: -384989652
+      LEONAJUMP_13: -1578573699
+      LEONAJUMP_2: -315787709
+      LEONAJUMP_3: -2066064846
+      LEONAJUMP_4: -1895472879
+      LEONAJUMP_5: -1101004567
+      LEONAJUMP_6: -1207156387
+      LEONAJUMP_7: 514476196
+      LEONAJUMP_8: -683719515
+      LEONAJUMP_9: 134775704
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

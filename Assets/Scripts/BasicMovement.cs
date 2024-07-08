@@ -121,6 +121,9 @@ public class BasicMovement : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, currentJumpForce);
             jumpsMade++; // INCREMENTAR EL CONTADOR DE SALTOS
             isGrounded = false; // MARCAR QUE YA NO ESTÁ EN EL SUELO
+
+            // ACTIVAR ANIMACION DE SALTO
+            animator.SetTrigger("JumpTrigger");
         }
     }
 
@@ -178,6 +181,8 @@ public class BasicMovement : MonoBehaviour
         dashTime = Time.time + dashDuration;
         nextDashTime = Time.time + dashCooldown;
         dashDirection = direction;
+        animator.SetTrigger("Dash"); // ACTIVAR LA ANIMACION DE DASH
+        Debug.Log("Dash Triggered"); // AGREGAR LOG PARA VERIFICAR QUE FUNCIONE EL DASH
     }
 
     void ContinueDash()
@@ -186,10 +191,12 @@ public class BasicMovement : MonoBehaviour
         {
             isDashing = false;
             rb.velocity = Vector2.zero;
+            Debug.Log("Dash Ended"); // LOG PARA VERIFICAR QUE DASH TERMINO
         }
         else
         {
             rb.velocity = dashDirection * dashSpeed;
+            Debug.Log("Dashing"); // LOG PARA VERIFICAR QUE ESTE HACIENDO DASH
         }
     }
 }
