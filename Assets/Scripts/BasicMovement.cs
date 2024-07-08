@@ -106,6 +106,9 @@ public class BasicMovement : MonoBehaviour
             jumpsMade = 0;
         }
 
+        // ACTUALIZAR ESTADO ISGROUNDED EN EL ANIMATOR
+        animator.SetBool("IsGrounded", isGrounded);
+
         // ACTUALIZAR ESTADO DEL DASH
         if (isDashing)
         {
