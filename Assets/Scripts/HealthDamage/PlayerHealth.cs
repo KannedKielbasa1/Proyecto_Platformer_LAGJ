@@ -26,7 +26,7 @@ public class PlayerHealth : MonoBehaviour
         // Asegurarse de que la vida no caiga por debajo de cero
         currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
 
-        // Activar el efecto de parpadeo visual
+        // Iniciar el efecto de parpadeo visual al recibir daño
         if (playerVisualDamage != null)
         {
             playerVisualDamage.TriggerDamageFlick();
@@ -48,7 +48,7 @@ public class PlayerHealth : MonoBehaviour
     }
 
     // Método para manejar la muerte del jugador
-    private void Die()
+    public void Die()
     {
         // Aquí puedes manejar lo que sucede cuando el jugador muere
         Debug.Log("Player has died.");
