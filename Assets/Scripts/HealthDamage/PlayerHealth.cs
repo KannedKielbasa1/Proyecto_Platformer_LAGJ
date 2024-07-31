@@ -7,10 +7,16 @@ public class PlayerHealth : MonoBehaviour
     // Variable privada para la vida actual del jugador
     private float currentHealth;
 
+    // Referencia al script PlayerVisualDamage
+    private PlayerVisualDamage playerVisualDamage;
+
     void Start()
     {
         // Inicializar la vida actual al valor máximo al comenzar el juego
         currentHealth = maxHealth;
+
+        // Obtener la referencia al script PlayerVisualDamage
+        playerVisualDamage = GetComponent<PlayerVisualDamage>();
     }
 
     // Método para reducir la vida del jugador
@@ -19,6 +25,12 @@ public class PlayerHealth : MonoBehaviour
         currentHealth -= amount;
         // Asegurarse de que la vida no caiga por debajo de cero
         currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
+
+        // Activar el efecto de parpadeo visual
+        if (playerVisualDamage != null)
+        {
+            playerVisualDamage.TriggerDamageFlick();
+        }
 
         // Verificar si el jugador ha muerto
         if (currentHealth <= 0f)
