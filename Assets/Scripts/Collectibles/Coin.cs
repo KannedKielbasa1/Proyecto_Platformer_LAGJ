@@ -1,18 +1,8 @@
 using UnityEngine;
 
-// Clase derivada para las monedas
 public class Coin : Collectible
 {
-    private AudioSource audioSource; // Referencia al componente de AudioSource
-
-    private void Awake()
-    {
-        audioSource = GetComponent<AudioSource>(); // Obtiene el AudioSource
-        if (audioSource == null)
-        {
-            Debug.LogError("No AudioSource component found on the Coin prefab!");
-        }
-    }
+    public AudioClip coinSound; // Referencia al clip de sonido de la moneda
 
     public override void Collect()
     {
@@ -22,17 +12,17 @@ public class Coin : Collectible
         Destroy(gameObject); // Destruye la moneda después de ser recogida
     }
 
-    // Reproduce el efecto de sonido
+    // Reproduce el efecto de sonido usando AudioManager
     private void PlaySound()
     {
-        if (audioSource != null)
+        if (coinSound != null)
         {
-            audioSource.PlayOneShot(audioSource.clip); // Reproduce el sonido del clip asignado
+            AudioManager.Instance.PlaySFX(coinSound); // Usa el AudioManager para reproducir el sonido
             Debug.Log("Playing coin collection sound.");
         }
         else
         {
-            Debug.LogWarning("AudioSource is not assigned or found on the Coin.");
+            Debug.LogWarning("Coin sound is not assigned in the Coin script.");
         }
     }
 
