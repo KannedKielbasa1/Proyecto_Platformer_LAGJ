@@ -8,6 +8,8 @@ public class PlayerAttack : MonoBehaviour
     public GameObject projectilePrefab; // Prefab del proyectil
     public Transform attackPoint; // Punto desde donde se lanzará el proyectil
     public float projectileSpeed = 10f; // Velocidad del proyectil
+    public AudioClip[] attackSounds; // Arreglo de sonidos de ataque
+    private AudioSource audioSource; // Componente AudioSource para reproducir sonidos
     private Animator animator; // Referencia al Animator
     private SpriteRenderer spriteRenderer; // Referencia al SpriteRenderer
 
@@ -23,6 +25,7 @@ public class PlayerAttack : MonoBehaviour
         // Obtener el Animator y SpriteRenderer desde el GameObject
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        audioSource = GetComponent<AudioSource>(); // Obtener el AudioSource del objeto
     }
 
     void OnEnable()
@@ -50,10 +53,17 @@ public class PlayerAttack : MonoBehaviour
         projec.Init();
 
         // Obtener la dirección del proyectil basado en la orientación del jugador
-        Vector2 direction = spriteRenderer.flipX ? Vector2.left : Vector2.right;
+        Vector2 direction = spriteRenderer.flipX ? Vector2.right : Vector2.left;
 
         // Asignar velocidad al proyectil
         Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();
         rb.velocity = direction * projectileSpeed;
+
+        // Reproducir un sonido de ataque aleatorio
+        if (attackSounds.Length > 0 && audioSource != null)
+        {
+            int randomIndex = Random.Range(0, attackSounds.Length);
+            audioSource.PlayOneShot(attackSounds[randomIndex]);
+        }
     }
 }

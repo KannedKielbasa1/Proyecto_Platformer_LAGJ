@@ -1,11 +1,12 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
 
-    public AudioSource bgmSource;
-    public AudioSource sfxSource;
+    public List<AudioSource> bgmSources = new List<AudioSource>(); // Lista de fuentes BGM
+    public List<AudioSource> sfxSources = new List<AudioSource>(); // Lista de fuentes SFX
 
     private void Awake()
     {
@@ -21,24 +22,70 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    // Reproducir un efecto de sonido
+    // Reproducir un efecto de sonido en la primera fuente de SFX disponible
     public void PlaySFX(AudioClip clip)
     {
-        sfxSource.PlayOneShot(clip);
+        AudioSource sfxSource = GetAvailableSFXSource();
+        if (sfxSource != null)
+        {
+            sfxSource.PlayOneShot(clip);
+        }
     }
 
-    // Reproducir musica de fondo
+    // Reproducir musica de fondo en la primera fuente de BGM disponible
     public void PlayBGM(AudioClip clip)
     {
-        if (bgmSource.clip == clip) return;
+        AudioSource bgmSource = GetAvailableBGMSource();
+        if (bgmSource != null)
+        {
+            if (bgmSource.clip == clip) return;
 
-        bgmSource.clip = clip;
-        bgmSource.Play();
+            bgmSource.clip = clip;
+            bgmSource.Play();
+        }
     }
 
-    // Detener musica de fondo
+    // Detener toda la musica de fondo
     public void StopBGM()
     {
-        bgmSource.Stop();
+        foreach (var bgmSource in bgmSources)
+        {
+            bgmSource.Stop();
+        }
+    }
+
+    // Detener todos los efectos de sonido
+    public void StopSFX()
+    {
+        foreach (var sfxSource in sfxSources)
+        {
+            sfxSource.Stop();
+        }
+    }
+
+    // Obtener la primera fuente de BGM disponible
+    private AudioSource GetAvailableBGMSource()
+    {
+        foreach (var source in bgmSources)
+        {
+            if (!source.isPlaying)
+            {
+                return source;
+            }
+        }
+        return null;
+    }
+
+    // Obtener la primera fuente de SFX disponible
+    private AudioSource GetAvailableSFXSource()
+    {
+        foreach (var source in sfxSources)
+        {
+            if (!source.isPlaying)
+            {
+                return source;
+            }
+        }
+        return null;
     }
 }
