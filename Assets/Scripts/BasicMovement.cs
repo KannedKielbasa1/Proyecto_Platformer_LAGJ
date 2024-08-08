@@ -19,8 +19,7 @@ public class BasicMovement : MonoBehaviour
     private PlayerControls controls;
     private Vector2 moveInput;
     private bool isGrounded;
-    private int maxJumps = 2; // PERMITIR DOS SALTOS
-    private int jumpsMade = 0;
+    private bool canDoubleJump;
     private bool isSprinting = false;
 
     [Header("Dash Settings")]
@@ -36,6 +35,13 @@ public class BasicMovement : MonoBehaviour
     private float lastDashPressTimeA = 0f;
     private float lastDashPressTimeD = 0f;
     private float doublePressThreshold = 0.3f; // TIEMPO PERMITIDO PARA CONSIDERAR DOBLE PULSACIÓN
+
+    public Transform wallCheck; // Agregar un nuevo punto de verificación para las paredes.
+    public LayerMask wallLayer; // Capa que define las paredes.
+
+    private bool isTouchingWall = false; // Nuevo estado para verificar si se toca una pared.
+    private int wallJumpLimit = 1; // Limitar la cantidad de saltos desde una pared.
+    private int wallJumpsMade = 0; // Contador para los saltos realizados desde una pared.
 
     void Awake()
     {
@@ -71,14 +77,17 @@ public class BasicMovement : MonoBehaviour
 
     void Update()
     {
-        // DETERMINAR VELOCIDAD
+        // Verificar si está tocando una pared
+        isTouchingWall = CheckWallTouch();
+
+        // Determinar velocidad
         float currentSpeed = (isSprinting && (moveInput.x != 0)) ? sprintValue : speed;
 
-        // MOVIMIENTO HORIZONTAL
+        // Movimiento horizontal
         Vector2 horizontalMove = new Vector2(moveInput.x * currentSpeed, rb.velocity.y);
         rb.velocity = new Vector2(horizontalMove.x, rb.velocity.y);
 
-        // ACTUALIZAR LA ANIMACIÓN
+        // Actualizar la animación
         animator.SetBool("IsMoving", moveInput.x != 0);
         if (moveInput.x > 0)
         {
@@ -97,20 +106,21 @@ public class BasicMovement : MonoBehaviour
             CheckForDash(KeyCode.A, ref lastDashPressTimeA);
         }
 
-        // VERIFICAR QUE ESTÉ EN EL SUELO
+        // Verificar que esté en el suelo
         isGrounded = CheckGrounded();
 
-        // RESTEAR EL CONTADOR DE SALTOS UNA VEZ EN EL SUELO
+        // Restablecer el contador de saltos si está en el suelo
         if (isGrounded)
         {
-            jumpsMade = 0;
+            canDoubleJump = true;
+            wallJumpsMade = 0; // Restablecer el contador de saltos de pared
         }
 
-        // ACTUALIZAR ESTADO ISGROUNDED EN EL ANIMATOR
+        // Actualizar estado isGrounded en el animator
         animator.SetBool("IsGrounded", isGrounded);
         animator.SetBool("Jumping", !isGrounded);
 
-        // ACTUALIZAR ESTADO DEL DASH
+        // Actualizar estado del dash
         if (isDashing)
         {
             ContinueDash();
@@ -119,25 +129,38 @@ public class BasicMovement : MonoBehaviour
 
     private void TryJump()
     {
-        if (jumpsMade < maxJumps)
+        if (isGrounded)
         {
-            float currentJumpForce = jumpsMade == 0 ? jumpForce : doubleJumpForce;
-            rb.velocity = new Vector2(rb.velocity.x, currentJumpForce);
-            jumpsMade++; // INCREMENTAR EL CONTADOR DE SALTOS
-            isGrounded = false; // MARCAR QUE YA NO ESTÁ EN EL SUELO
-
-            // ACTIVAR ANIMACION DE SALTO
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            canDoubleJump = true;
         }
+        else if (canDoubleJump)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, doubleJumpForce);
+            canDoubleJump = false;
+        }
+        else if (isTouchingWall && wallJumpsMade < wallJumpLimit)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            wallJumpsMade++;
+        }
+
+        // Activar animación de salto si es necesario
     }
 
     private void EndJump()
     {
-        // METODO PARA MANEJAR LA LIBERACIÓN DE SALTO SI ES NECESARIO
+        // Método para manejar la liberación de salto si es necesario
     }
 
     private bool CheckGrounded()
     {
         return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+    }
+
+    private bool CheckWallTouch()
+    {
+        return Physics2D.OverlapCircle(wallCheck.position, 0.2f, wallLayer);
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -146,6 +169,10 @@ public class BasicMovement : MonoBehaviour
         {
             isGrounded = true;
         }
+        else if (collision.gameObject.CompareTag("Wall"))
+        {
+            isTouchingWall = true;
+        }
     }
 
     void OnCollisionExit2D(Collision2D collision)
@@ -153,6 +180,10 @@ public class BasicMovement : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = false;
+        }
+        else if (collision.gameObject.CompareTag("Wall"))
+        {
+            isTouchingWall = false;
         }
     }
 
@@ -184,8 +215,8 @@ public class BasicMovement : MonoBehaviour
         dashTime = Time.time + dashDuration;
         nextDashTime = Time.time + dashCooldown;
         dashDirection = direction;
-        animator.SetTrigger("Dash"); // ACTIVAR LA ANIMACION DE DASH
-        Debug.Log("Dash Triggered"); // AGREGAR LOG PARA VERIFICAR QUE FUNCIONE EL DASH
+        animator.SetTrigger("Dash"); // Activar la animación de dash
+        Debug.Log("Dash Triggered"); // Agregar log para verificar que funcione el dash
     }
 
     void ContinueDash()
@@ -194,12 +225,17 @@ public class BasicMovement : MonoBehaviour
         {
             isDashing = false;
             rb.velocity = Vector2.zero;
-            Debug.Log("Dash Ended"); // LOG PARA VERIFICAR QUE DASH TERMINO
+            Debug.Log("Dash Ended"); // Log para verificar que dash terminó
         }
         else
         {
             rb.velocity = dashDirection * dashSpeed;
-            Debug.Log("Dashing"); // LOG PARA VERIFICAR QUE ESTE HACIENDO DASH
+            Debug.Log("Dashing"); // Log para verificar que esté haciendo dash
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawSphere(groundCheck.position, 0.2f);
     }
 }
