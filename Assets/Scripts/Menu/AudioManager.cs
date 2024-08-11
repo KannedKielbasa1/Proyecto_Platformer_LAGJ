@@ -15,6 +15,9 @@ public class AudioManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+
+            // Configurar el volumen global al iniciar el juego
+            AudioListener.volume = PlayerPrefs.GetFloat("volume", 100) / 100;
         }
         else
         {
@@ -87,5 +90,13 @@ public class AudioManager : MonoBehaviour
             }
         }
         return null;
+    }
+
+    // Función para actualizar el volumen global
+    public void UpdateVolume(float volume)
+    {
+        AudioListener.volume = volume / 100;
+        PlayerPrefs.SetFloat("volume", volume);
+        PlayerPrefs.Save();
     }
 }
