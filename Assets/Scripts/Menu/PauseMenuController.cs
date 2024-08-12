@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.InputSystem;
 
 public class PauseMenuController : MonoBehaviour
 {
@@ -12,29 +11,26 @@ public class PauseMenuController : MonoBehaviour
         pausePanel.SetActive(false);
     }
 
-    public void OnPause(InputAction.CallbackContext context)
+    public void OnPause()
     {
-        if (context.started)
+        if (isPaused)
         {
-            if (isPaused)
-            {
-                ResumeGame();
-            }
-            else
-            {
-                PauseGame();
-            }
+            ResumeGame();
+        }
+        else
+        {
+            PauseGame();
         }
     }
 
-    void PauseGame()
+    private void PauseGame()
     {
         pausePanel.SetActive(true);
         Time.timeScale = 0f; // Congela la escena
         isPaused = true;
     }
 
-    public void ResumeGame()
+    private void ResumeGame()
     {
         pausePanel.SetActive(false);
         Time.timeScale = 1f; // Reanuda la escena
