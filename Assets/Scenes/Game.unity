@@ -15926,7 +15926,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da879d72c68ee15488c8b558430215c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pausePanel: {fileID: 1788724443}
+  pauseMenuPanel: {fileID: 1788724443}
+  basicMovement: {fileID: 1588716605}
+  playerAttack: {fileID: 1588716615}
 --- !u!114 &1439139541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16038,6 +16040,8 @@ MonoBehaviour:
   coinManager: {fileID: 1655416051}
   playerHealth: {fileID: 1588716612}
   timer: {fileID: 796478101}
+  basicMovement: {fileID: 1588716605}
+  playerAttack: {fileID: 1588716615}
 --- !u!1 &1542480151
 GameObject:
   m_ObjectHideFlags: 0
@@ -46876,10 +46880,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2279531526795913139, guid: b75056240c9d01b4a823db3bab48e271, type: 3}
-      propertyPath: m_Volume
-      value: 0.35
-      objectReference: {fileID: 0}
     - target: {fileID: 2727157559013381127, guid: b75056240c9d01b4a823db3bab48e271, type: 3}
       propertyPath: m_Name
       value: AudioManager

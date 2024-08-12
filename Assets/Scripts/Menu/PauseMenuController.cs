@@ -3,43 +3,58 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenuController : MonoBehaviour
 {
-    public GameObject pausePanel;
+    public GameObject pauseMenuPanel;
+    public BasicMovement basicMovement; // Referencia al script de movimiento
+    public PlayerAttack playerAttack; // Referencia al script de ataque
+
     private bool isPaused = false;
 
-    private void Start()
+    void Update()
     {
-        pausePanel.SetActive(false);
-    }
-
-    public void OnPause()
-    {
-        if (isPaused)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            ResumeGame();
-        }
-        else
-        {
-            PauseGame();
+            if (isPaused)
+            {
+                ResumeGame();
+            }
+            else
+            {
+                PauseGame();
+            }
         }
     }
 
-    private void PauseGame()
+    public void PauseGame()
     {
-        pausePanel.SetActive(true);
-        Time.timeScale = 0f; // Congela la escena
+        pauseMenuPanel.SetActive(true);
+        Time.timeScale = 0f;
+        DisablePlayerInputs(); // Desactiva los inputs del jugador
         isPaused = true;
     }
 
-    private void ResumeGame()
+    public void ResumeGame()
     {
-        pausePanel.SetActive(false);
-        Time.timeScale = 1f; // Reanuda la escena
+        pauseMenuPanel.SetActive(false);
+        Time.timeScale = 1f;
+        EnablePlayerInputs(); // Vuelve a habilitar los inputs del jugador
         isPaused = false;
     }
 
     public void QuitToMenu()
     {
-        Time.timeScale = 1f; // Asegura que el tiempo se reanuda al salir
+        Time.timeScale = 1f;
         SceneManager.LoadScene("Menu");
+    }
+
+    private void DisablePlayerInputs()
+    {
+        basicMovement.enabled = false; // Desactiva el movimiento
+        playerAttack.enabled = false;  // Desactiva los ataques
+    }
+
+    private void EnablePlayerInputs()
+    {
+        basicMovement.enabled = true;  // Vuelve a habilitar el movimiento
+        playerAttack.enabled = true;   // Vuelve a habilitar los ataques
     }
 }
