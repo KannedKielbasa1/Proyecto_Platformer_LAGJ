@@ -47,4 +47,10 @@ public class CountdownTimer : MonoBehaviour
         int seconds = Mathf.FloorToInt(time % 60);
         timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
+
+    // Nueva propiedad para acceder al tiempo actual
+    public float CurrentTime
+    {
+        get { return currentTime; }
+    }
 }

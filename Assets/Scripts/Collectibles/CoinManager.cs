@@ -46,4 +46,10 @@ public class CoinManager : MonoBehaviour
             Debug.LogWarning("Coin text UI component is not assigned!");
         }
     }
+
+    // Nueva propiedad para acceder al contador de monedas
+    public int CoinsCollected
+    {
+        get { return coinCount; }
+    }
 }

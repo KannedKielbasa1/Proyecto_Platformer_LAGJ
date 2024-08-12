@@ -36,12 +36,13 @@ public class BasicMovement : MonoBehaviour
     private float lastDashPressTimeD = 0f;
     private float doublePressThreshold = 0.3f; // TIEMPO PERMITIDO PARA CONSIDERAR DOBLE PULSACIÓN
 
-    public Transform wallCheck; // Agregar un nuevo punto de verificación para las paredes.
-    public LayerMask wallLayer; // Capa que define las paredes.
+    public Transform wallCheck1; // Primer punto de verificación de pared
+    public Transform wallCheck2; // Segundo punto de verificación de pared
+    public LayerMask wallLayer; // Capa que define las paredes
 
-    private bool isTouchingWall = false; // Nuevo estado para verificar si se toca una pared.
-    private int wallJumpLimit = 1; // Limitar la cantidad de saltos desde una pared.
-    private int wallJumpsMade = 0; // Contador para los saltos realizados desde una pared.
+    private bool isTouchingWall = false; // Nuevo estado para verificar si se toca una pared
+    private int wallJumpLimit = 1; // Limitar la cantidad de saltos desde una pared
+    private int wallJumpsMade = 0; // Contador para los saltos realizados desde una pared
 
     void Awake()
     {
@@ -160,7 +161,10 @@ public class BasicMovement : MonoBehaviour
 
     private bool CheckWallTouch()
     {
-        return Physics2D.OverlapCircle(wallCheck.position, 0.2f, wallLayer);
+        // Verificar si alguno de los wallChecks está tocando una pared
+        bool wallCheck1Touch = Physics2D.OverlapCircle(wallCheck1.position, 0.2f, wallLayer);
+        bool wallCheck2Touch = Physics2D.OverlapCircle(wallCheck2.position, 0.2f, wallLayer);
+        return wallCheck1Touch || wallCheck2Touch;
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -237,5 +241,7 @@ public class BasicMovement : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawSphere(groundCheck.position, 0.2f);
+        Gizmos.DrawSphere(wallCheck1.position, 0.2f);
+        Gizmos.DrawSphere(wallCheck2.position, 0.2f);
     }
 }
