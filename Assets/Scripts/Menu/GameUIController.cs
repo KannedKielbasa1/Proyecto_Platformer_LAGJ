@@ -15,6 +15,16 @@ public class GameUIController : MonoBehaviour
     {
         victoryPanel.SetActive(false);
         gameOverPanel.SetActive(false);
+
+        Time.timeScale = 1f; // Asegura que el tiempo se reanuda al salir
+        // Registrar el método OnSceneLoaded al evento sceneLoaded
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDestroy()
+    {
+        // Desregistrar el método OnSceneLoaded al destruir el objeto
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     private void Update()
@@ -54,9 +64,7 @@ public class GameUIController : MonoBehaviour
 
         // Cargar la escena nuevamente
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        // La reanudación del tiempo y la reactivación del control del jugador ocurren en OnSceneLoaded
     }
-
 
     public void QuitToMenu()
     {
@@ -74,5 +82,11 @@ public class GameUIController : MonoBehaviour
     {
         basicMovement.enabled = true;  // Vuelve a habilitar el movimiento
         playerAttack.enabled = true;   // Vuelve a habilitar los ataques
+    }
+
+    // Método que se llama cuando se carga la escena
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        EnablePlayerInputs(); // Reactiva los inputs del jugador
     }
 }
