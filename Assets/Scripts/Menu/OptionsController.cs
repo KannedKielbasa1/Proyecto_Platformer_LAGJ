@@ -5,8 +5,8 @@ public class OptionsController : MonoBehaviour
 {
     public GameObject soundOptionsPanel;
     public Slider volumeSlider;
-    public Text volumeText;  // Agrega un campo para el texto del volumen
-    public GameObject menuPanel;  // El panel del menú principal
+    public Text volumeText;
+    public GameObject menuPanel;
 
     private void Start()
     {
@@ -14,12 +14,13 @@ public class OptionsController : MonoBehaviour
         float savedVolume = PlayerPrefs.GetFloat("volume", 100);
         volumeSlider.value = savedVolume;
         UpdateVolumeText(savedVolume);
+        UpdateAllAudioSourcesVolume(savedVolume / 100f);
     }
 
     public void OpenSoundOptions()
     {
         soundOptionsPanel.SetActive(true);
-        menuPanel.SetActive(false);  // Oculta el menú principal cuando se abren las opciones
+        menuPanel.SetActive(false);
     }
 
     public void SaveSoundOptions()
@@ -29,24 +30,39 @@ public class OptionsController : MonoBehaviour
         PlayerPrefs.Save();
 
         soundOptionsPanel.SetActive(false);
-        menuPanel.SetActive(true);  // Vuelve al menú principal
+        menuPanel.SetActive(true);
     }
 
     public void CancelSoundOptions()
     {
         // Revertir a la configuración guardada y cerrar la ventana
-        volumeSlider.value = PlayerPrefs.GetFloat("volume", 100);
+        float savedVolume = PlayerPrefs.GetFloat("volume", 100);
+        volumeSlider.value = savedVolume;
+        UpdateVolumeText(savedVolume);
+        UpdateAllAudioSourcesVolume(savedVolume / 100f);
+
         soundOptionsPanel.SetActive(false);
-        menuPanel.SetActive(true);  // Vuelve al menú principal
+        menuPanel.SetActive(true);
     }
 
     public void OnVolumeSliderChanged()
     {
         UpdateVolumeText(volumeSlider.value);
+        UpdateAllAudioSourcesVolume(volumeSlider.value / 100f);
     }
 
     private void UpdateVolumeText(float volume)
     {
         volumeText.text = volume.ToString("0") + "%";
+    }
+
+    private void UpdateAllAudioSourcesVolume(float volume)
+    {
+        // Actualiza el volumen de todos los AudioSources en la escena
+        AudioSource[] audioSources = FindObjectsOfType<AudioSource>();
+        foreach (AudioSource audioSource in audioSources)
+        {
+            audioSource.volume = volume;
+        }
     }
 }
