@@ -36,11 +36,18 @@ public class BasicMovement : MonoBehaviour
     private float lastDashPressTimeD = 0f;
     private float doublePressThreshold = 0.3f; // TIEMPO PERMITIDO PARA CONSIDERAR DOBLE PULSACIÓN
 
+    [Header("Wall Jump Settings")]
     public Transform wallCheck1; // Primer punto de verificación de pared
     public Transform wallCheck2; // Segundo punto de verificación de pared
     public LayerMask wallLayer; // Capa que define las paredes
+    public float wallSlideSpeed = 2f; // Velocidad de deslizamiento por la pared
+    public float wallJumpXForce = 10f; // Fuerza horizontal del salto en la pared
+    public float wallJumpYForce = 12f; // Fuerza vertical del salto en la pared
+    public float wallJumpCooldown = 0.2f; // Tiempo de cooldown entre saltos en la pared
 
     private bool isTouchingWall = false; // Nuevo estado para verificar si se toca una pared
+    private bool isWallSliding = false; // Estado para verificar si está deslizándose por la pared
+    private bool canWallJump = true; // Estado para manejar el cooldown del salto en la pared
     private int wallJumpLimit = 1; // Limitar la cantidad de saltos desde una pared
     private int wallJumpsMade = 0; // Contador para los saltos realizados desde una pared
 
@@ -80,6 +87,16 @@ public class BasicMovement : MonoBehaviour
     {
         // Verificar si está tocando una pared
         isTouchingWall = CheckWallTouch();
+
+        // Manejar el deslizamiento por la pared
+        if (isTouchingWall && !isGrounded && moveInput.x != 0)
+        {
+            StartWallSlide();
+        }
+        else
+        {
+            StopWallSlide();
+        }
 
         // Determinar velocidad
         float currentSpeed = (isSprinting && (moveInput.x != 0)) ? sprintValue : speed;
@@ -127,7 +144,6 @@ public class BasicMovement : MonoBehaviour
             ContinueDash();
         }
     }
-
     private void TryJump()
     {
         if (isGrounded)
@@ -140,13 +156,10 @@ public class BasicMovement : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, doubleJumpForce);
             canDoubleJump = false;
         }
-        else if (isTouchingWall && wallJumpsMade < wallJumpLimit)
+        else if (isWallSliding && canWallJump)
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-            wallJumpsMade++;
+            WallJump();
         }
-
-        // Activar animación de salto si es necesario
     }
 
     private void EndJump()
@@ -165,6 +178,62 @@ public class BasicMovement : MonoBehaviour
         bool wallCheck1Touch = Physics2D.OverlapCircle(wallCheck1.position, 0.2f, wallLayer);
         bool wallCheck2Touch = Physics2D.OverlapCircle(wallCheck2.position, 0.2f, wallLayer);
         return wallCheck1Touch || wallCheck2Touch;
+    }
+
+    private void StartWallSlide()
+    {
+        isWallSliding = true;
+        rb.velocity = new Vector2(rb.velocity.x, -wallSlideSpeed);
+
+        // Realizar automáticamente el salto al lado contrario
+        AutoWallJump();
+
+        // animator.SetBool("IsWallSliding", true);
+    }
+
+    private void AutoWallJump()
+    {
+        // Obtener la dirección opuesta al lado en el que te estás deslizando
+        float jumpDirection = moveInput.x > 0 ? -1 : 1;
+
+        // Añadir la fuerza en la dirección opuesta para el salto en la pared
+        rb.velocity = new Vector2(wallJumpXForce * jumpDirection, wallJumpYForce);
+
+        // Deshabilitar temporalmente la posibilidad de hacer otro wall jump
+        canWallJump = false;
+        wallJumpsMade++;
+        Invoke("ResetWallJump", wallJumpCooldown); // Resetea el cooldown para el wall jump
+    }
+
+    private void StopWallSlide()
+    {
+        isWallSliding = false;
+        // animator.SetBool("IsWallSliding", false); // Desactivar animación de deslizamiento si es necesario
+    }
+
+    private void WallJump()
+    {
+        // Obtener la dirección opuesta al lado en el que te estás deslizando
+        float jumpDirection = moveInput.x > 0 ? -1 : 1;
+
+        // Añadir la fuerza en la dirección opuesta para el salto en la pared
+        rb.velocity = new Vector2(wallJumpXForce * jumpDirection, wallJumpYForce);
+
+        // Deshabilitar temporalmente la posibilidad de hacer otro wall jump
+        canWallJump = false;
+        wallJumpsMade++;
+        Invoke("ResetWallJump", wallJumpCooldown); // Resetea el cooldown para el wall jump
+    }
+
+    private void ResetWallJump()
+    {
+        canWallJump = true;
+
+        // Si se ha alcanzado el límite de saltos desde la pared, restablecerlo al tocar el suelo
+        if (wallJumpsMade >= wallJumpLimit)
+        {
+            wallJumpsMade = 0;
+        }
     }
 
     void OnCollisionEnter2D(Collision2D collision)
