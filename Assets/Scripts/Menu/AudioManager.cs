@@ -1,16 +1,16 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
 
-    public List<AudioSource> bgmSources = new List<AudioSource>(); // Lista de fuentes BGM
-    public List<AudioSource> sfxSources = new List<AudioSource>(); // Lista de fuentes SFX
+    public List<AudioSource> bgmSources = new List<AudioSource>();
+    public List<AudioSource> sfxSources = new List<AudioSource>();
 
     private void Awake()
     {
-        // Patron singleton para asegurar que el manager exista
         if (Instance == null)
         {
             Instance = this;
@@ -25,7 +25,38 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    // Reproducir un efecto de sonido en la primera fuente de SFX disponible
+    private void Start()
+    {
+        // Reproduce la música adecuada dependiendo de la escena activa
+        PlaySceneBGM();
+
+        // Suscribirse al evento de cambio de escena
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Reproduce la música adecuada cuando una nueva escena se carga
+        PlaySceneBGM();
+    }
+
+    private void PlaySceneBGM()
+    {
+        // Detener cualquier música que esté sonando
+        StopBGM();
+
+        // Determinar qué música reproducir en función de la escena actual
+        string sceneName = SceneManager.GetActiveScene().name;
+        if (sceneName == "Menu")
+        {
+            PlayBGM(bgmSources[1].clip, 1); // Reproducir la música del menú
+        }
+        else if (sceneName == "Game")
+        {
+            PlayBGM(bgmSources[0].clip, 0); // Reproducir la música del juego
+        }
+    }
+
     public void PlaySFX(AudioClip clip)
     {
         AudioSource sfxSource = GetAvailableSFXSource();
@@ -35,20 +66,27 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    // Reproducir musica de fondo en la primera fuente de BGM disponible
-    public void PlayBGM(AudioClip clip)
+    public void PlayBGM(AudioClip clip, int sourceIndex)
     {
-        AudioSource bgmSource = GetAvailableBGMSource();
+        StopBGM(); // Detiene toda la música de fondo
+
+        if (sourceIndex < 0 || sourceIndex >= bgmSources.Count)
+        {
+            Debug.LogWarning("Índice de fuente BGM inválido.");
+            return;
+        }
+
+        AudioSource bgmSource = bgmSources[sourceIndex];
         if (bgmSource != null)
         {
-            if (bgmSource.clip == clip) return;
-
-            bgmSource.clip = clip;
+            if (bgmSource.clip != clip)
+            {
+                bgmSource.clip = clip;
+            }
             bgmSource.Play();
         }
     }
 
-    // Detener toda la musica de fondo
     public void StopBGM()
     {
         foreach (var bgmSource in bgmSources)
@@ -57,7 +95,6 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    // Detener todos los efectos de sonido
     public void StopSFX()
     {
         foreach (var sfxSource in sfxSources)
@@ -66,7 +103,6 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    // Obtener la primera fuente de BGM disponible
     private AudioSource GetAvailableBGMSource()
     {
         foreach (var source in bgmSources)
@@ -79,7 +115,6 @@ public class AudioManager : MonoBehaviour
         return null;
     }
 
-    // Obtener la primera fuente de SFX disponible
     private AudioSource GetAvailableSFXSource()
     {
         foreach (var source in sfxSources)
@@ -92,7 +127,6 @@ public class AudioManager : MonoBehaviour
         return null;
     }
 
-    // Función para actualizar el volumen global
     public void UpdateVolume(float volume)
     {
         AudioListener.volume = volume / 100;

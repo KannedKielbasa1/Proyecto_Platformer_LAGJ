@@ -212,6 +212,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bgmSources:
   - {fileID: 2279531526795913139}
+  - {fileID: 8272373999036104653}
   sfxSources:
   - {fileID: 5748672585816908659}
   - {fileID: 267007922371845224}
