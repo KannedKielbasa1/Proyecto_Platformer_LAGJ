@@ -4105,7 +4105,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "Ver.63523-4\nCONTROLS\n- A / D - Move\r\n- A / D\xB2 - Dash\n- SHIFT -
-    Sprint\n- SPACE - Jump\r\n- SPACE\xB2 - DJump\n- [TBA] - WallJump\n- MOUSE1 -
+    Sprint\n- SPACE - Jump\r\n- SPACE\xB2 - DJump\n- AUTO - WallJump\n- MOUSE1 -
     Hit\n- ESC - Pause\n"
 --- !u!222 &468717927
 CanvasRenderer:
@@ -46941,6 +46941,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1703606881799735234, guid: b7ffc9a2d5662fa48a9ce41d5f265a58, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6150528268944841460, guid: b7ffc9a2d5662fa48a9ce41d5f265a58, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6150528268944841460, guid: b7ffc9a2d5662fa48a9ce41d5f265a58, type: 3}
+      propertyPath: m_SortingOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6776518059929356609, guid: b7ffc9a2d5662fa48a9ce41d5f265a58, type: 3}
