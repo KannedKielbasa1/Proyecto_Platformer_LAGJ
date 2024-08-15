@@ -144,7 +144,7 @@ public class BasicMovement : MonoBehaviour
             ContinueDash();
         }
     }
-    private void TryJump()
+    public void TryJump()
     {
         if (isGrounded)
         {
@@ -162,7 +162,7 @@ public class BasicMovement : MonoBehaviour
         }
     }
 
-    private void EndJump()
+    public void EndJump()
     {
         // Método para manejar la liberación de salto si es necesario
     }
@@ -260,12 +260,12 @@ public class BasicMovement : MonoBehaviour
         }
     }
 
-    private void StartSprint()
+    public void StartSprint()
     {
         isSprinting = true;
     }
 
-    private void StopSprint()
+    public void StopSprint()
     {
         isSprinting = false;
     }
@@ -312,5 +312,23 @@ public class BasicMovement : MonoBehaviour
         Gizmos.DrawSphere(groundCheck.position, 0.2f);
         Gizmos.DrawSphere(wallCheck1.position, 0.2f);
         Gizmos.DrawSphere(wallCheck2.position, 0.2f);
+    }
+
+    public void SetMoveInput(Vector2 moveInput)
+    {
+        this.moveInput = moveInput;
+    }
+
+    public void HandleDoubleJump()
+    {
+        if (canDoubleJump)
+        {
+            TryJump();
+            canDoubleJump = false;
+        }
+    }
+    public void PerformDash()
+    {
+        // Lógica de Dash aquí, basada en la dirección de `moveInput`.
     }
 }

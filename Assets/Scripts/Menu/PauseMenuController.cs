@@ -57,4 +57,10 @@ public class PauseMenuController : MonoBehaviour
         basicMovement.enabled = true;  // Vuelve a habilitar el movimiento
         playerAttack.enabled = true;   // Vuelve a habilitar los ataques
     }
+
+    public bool IsPaused()
+    {
+        return isPaused;
+    }
+
 }

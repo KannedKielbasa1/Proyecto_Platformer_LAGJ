@@ -38,7 +38,7 @@ public class PlayerAttack : MonoBehaviour
         controls.Disable();
     }
 
-    void Attack()
+    public void Attack()
     {
         // Activar la animación de ataque
         if (animator != null)
